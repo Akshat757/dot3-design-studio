@@ -93,3 +93,11 @@ export const team = [
   { name: "ID Tavleen Kaur Saini", role: "Interior designer" },
   { name: "ID Disha Jain", role: "Interior designer" },
 ];
+
+// TODO(client): replace with real studio numbers (years active, projects completed, sq ft designed).
+export const stats = [
+  { value: 16, suffix: "+", label: "Projects designed" },
+  { value: 5, suffix: "", label: "Cities across Madhya Pradesh" },
+  { value: 20000, suffix: "", label: "Sq ft in our largest build" },
+  { value: 6, suffix: "", label: "Design disciplines" },
+];

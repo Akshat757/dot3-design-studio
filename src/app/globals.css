@@ -56,3 +56,103 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---- Intro curtain: three dots gather, the name appears, the curtain lifts. CSS-only so it always clears. ---- */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  pointer-events: none;
+  animation: intro-lift 0.9s cubic-bezier(0.76, 0, 0.24, 1) 1.5s forwards;
+}
+.intro-dots {
+  display: flex;
+  gap: 0.75rem;
+}
+.intro-dots span {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  opacity: 0;
+  transform: translateY(1rem);
+  animation: intro-dot 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.intro-dots span:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.intro-dots span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+.intro-word {
+  font-size: 1.5rem;
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: intro-word 0.8s ease-out 0.5s forwards;
+}
+[data-intro-seen] .intro {
+  display: none;
+}
+@keyframes intro-dot {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes intro-word {
+  from {
+    opacity: 0;
+    letter-spacing: 1.2em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.6em;
+  }
+}
+@keyframes intro-lift {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+/* ---- Marquee ---- */
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- Hero scroll hint ---- */
+.scroll-line {
+  animation: scroll-line 1.8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+}
+@keyframes scroll-line {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(200%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+  .marquee-track,
+  .scroll-line {
+    animation: none;
+  }
+}
