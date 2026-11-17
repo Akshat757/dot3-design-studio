@@ -1,0 +1,547 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant hc (&:where(.high-contrast, .high-contrast *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — SRS §8                                             */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Colour — light theme (default) */
+  --color-canvas: #fbf9f6;
+  --color-surface: #ffffff;
+  --color-surface-sunk: #f3efe9;
+  --color-ink: #1c1b19;
+  --color-ink-muted: #6b6762;
+  --color-ink-subtle: #9c9791;
+  --color-line: #e5dfd6;
+  --color-sand: #d9cebf;
+  --color-accent: #b5643c;
+  --color-accent-hover: #9c5232;
+  --color-accent-soft: #f5e8e0;
+  --color-forest: #2f4739;
+  --color-gold: #a8863f;
+  --color-success: #3e6b4f;
+  --color-warning: #b5873c;
+  --color-danger: #a14a3c;
+  --color-focus: #b5643c;
+
+  /* Typography */
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --text-display-xl: clamp(2.5rem, 1.5rem + 4.44vw, 5.5rem);
+  --text-display-xl--line-height: 1.02;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-l: clamp(2rem, 1.333rem + 2.96vw, 4rem);
+  --text-display-l--line-height: 1.06;
+  --text-display-l--letter-spacing: -0.025em;
+  --text-h1: clamp(1.875rem, 1.5rem + 1.67vw, 3rem);
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(1.5rem, 1.25rem + 1.11vw, 2.25rem);
+  --text-h2--line-height: 1.18;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.25rem, 1.125rem + 0.56vw, 1.625rem);
+  --text-h3--line-height: 1.28;
+  --text-h3--letter-spacing: -0.01em;
+  --text-body-l: clamp(1.0625rem, 1.02rem + 0.19vw, 1.1875rem);
+  --text-body-l--line-height: 1.65;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-body-s: 0.875rem;
+  --text-body-s--line-height: 1.6;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.5;
+  --text-caption--letter-spacing: 0.01em;
+  --text-overline: 0.75rem;
+  --text-overline--line-height: 1.4;
+  --text-overline--letter-spacing: 0.14em;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Elevation — warm-tinted */
+  --shadow-e1: 0 1px 2px rgba(28, 27, 25, 0.04), 0 1px 3px rgba(28, 27, 25, 0.06);
+  --shadow-e2: 0 2px 6px rgba(28, 27, 25, 0.05), 0 6px 16px rgba(28, 27, 25, 0.07);
+  --shadow-e3: 0 8px 24px rgba(28, 27, 25, 0.08), 0 16px 48px rgba(28, 27, 25, 0.1);
+  --shadow-e4: 0 24px 64px rgba(28, 27, 25, 0.14);
+
+  /* Motion */
+  --ease-quick: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-base: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-instant: 100ms;
+  --duration-quick: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 620ms;
+  --duration-image: 800ms;
+  --duration-kenburns: 9000ms;
+
+  /* Breakpoints (Tailwind defaults match SRS: 640/768/1024/1280/1536) */
+
+  /* Animations */
+  --animate-kenburns: kenburns var(--duration-kenburns) linear infinite alternate;
+  --animate-fade-in: fade-in var(--duration-base) var(--ease-base) both;
+  --animate-rise-in: rise-in var(--duration-slow) var(--ease-slow) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1) translate(0, 0);
+    }
+    to {
+      transform: scale(1.12) translate(-2%, -1.5%);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: -200% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slide-out-right {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes slide-in-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slide-out-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes slide-in-bottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  @keyframes slide-out-bottom {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes slide-in-top {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes accordion-down {
+    from {
+      height: 0;
+      opacity: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+      opacity: 1;
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+      opacity: 1;
+    }
+    to {
+      height: 0;
+      opacity: 0;
+    }
+  }
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dark theme — mandatory for the visualiser workspace (SRS §8.2)     */
+/* ------------------------------------------------------------------ */
+.dark {
+  --color-canvas: #16150f;
+  --color-surface: #201e19;
+  --color-surface-sunk: #12110d;
+  --color-ink: #f2ede5;
+  --color-ink-muted: #a8a29a;
+  --color-ink-subtle: #7a746c;
+  --color-line: #33302a;
+  --color-sand: #4a4338;
+  --color-accent-soft: #3a2a20;
+  color-scheme: dark;
+}
+
+/* Text over full-bleed photography (hero): always the light-theme palette, so the dark scrim and light
+   text keep their meaning when the visitor is in dark mode. */
+.on-photo,
+.dark .on-photo {
+  --color-canvas: #fbf9f6;
+  --color-surface: #ffffff;
+  --color-surface-sunk: #f3efe9;
+  --color-ink: #1c1b19;
+  --color-ink-muted: #6b6762;
+  --color-ink-subtle: #9c9791;
+  --color-line: #e5dfd6;
+  --color-sand: #d9cebf;
+  --color-accent-soft: #f5e8e0;
+  color-scheme: light;
+}
+
+/* High-contrast preference (FR-L-01) */
+.high-contrast {
+  --color-ink: #000000;
+  --color-ink-muted: #1c1b19;
+  --color-ink-subtle: #3a3733;
+  --color-line: #6b6762;
+  --color-accent: #8a3f1c;
+  --color-accent-hover: #6f3115;
+  --color-focus: #000000;
+}
+.dark.high-contrast {
+  --color-ink: #ffffff;
+  --color-ink-muted: #f2ede5;
+  --color-ink-subtle: #d8d2c8;
+  --color-line: #a8a29a;
+}
+
+/* Large-text preference (FR-L-01) */
+.large-text {
+  font-size: 125%;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ambient background + scroll-driven motion                          */
+/* ------------------------------------------------------------------ */
+
+/* Slow-drifting soft colour fields behind every page (see components/motion). */
+.ambient {
+  background:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      color-mix(in oklab, var(--color-surface-sunk) 70%, transparent),
+      transparent 60%
+    ),
+    var(--color-canvas);
+}
+.ambient-blob {
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.55;
+  will-change: transform;
+  animation: ambient-drift 36s ease-in-out infinite alternate;
+}
+.ambient-blob--a {
+  background: radial-gradient(circle at 40% 40%, var(--color-accent-soft) 0%, transparent 65%);
+}
+.ambient-blob--b {
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in oklab, var(--color-sand) 70%, white) 0%,
+    transparent 62%
+  );
+  animation-duration: 48s;
+  animation-delay: -12s;
+}
+.ambient-blob--c {
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in oklab, var(--color-forest) 22%, var(--color-canvas)) 0%,
+    transparent 60%
+  );
+  animation-duration: 42s;
+  animation-delay: -24s;
+  opacity: 0.45;
+}
+.dark .ambient-blob {
+  opacity: 0.35;
+}
+.dark .ambient-blob--b {
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in oklab, var(--color-gold) 30%, transparent) 0%,
+    transparent 62%
+  );
+}
+.ambient-grain {
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+}
+.dark .ambient-grain {
+  mix-blend-mode: screen;
+  opacity: 0.06;
+}
+@keyframes ambient-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6vw, -4vh, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-4vw, 5vh, 0) scale(0.96);
+  }
+}
+
+/* Let the ambient layer show through section backgrounds subtly. */
+.js-motion body {
+  background-color: transparent;
+}
+.js-motion main .bg-canvas {
+  background-color: color-mix(in oklab, var(--color-canvas) 86%, transparent);
+}
+.js-motion main .bg-surface-sunk {
+  background-color: color-mix(in oklab, var(--color-surface-sunk) 92%, transparent);
+}
+
+/*
+ * Automatic scroll reveals: every <section> inside <main> (tagged by the
+ * ScrollReveals observer) rises in with a soft stagger of its direct children.
+ * Only active when JS confirmed motion is allowed (html.js-motion).
+ */
+.js-motion main [data-reveal]:not([data-inview]) > * {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.js-motion main [data-reveal] > * {
+  transition:
+    opacity 0.8s var(--ease-slow, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 0.9s var(--ease-slow, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.js-motion main [data-reveal][data-inview] > * {
+  opacity: 1;
+  transform: none;
+}
+.js-motion main [data-reveal][data-inview] > :nth-child(2) {
+  transition-delay: 0.08s;
+}
+.js-motion main [data-reveal][data-inview] > :nth-child(3) {
+  transition-delay: 0.16s;
+}
+.js-motion main [data-reveal][data-inview] > :nth-child(n + 4) {
+  transition-delay: 0.24s;
+}
+/* Never hide form controls / live regions behind a reveal. */
+.js-motion main [data-reveal] > :where(form, [aria-live], [role='status'], [role='alert']) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Images inside cards get a gentle lift on hover (interior-portfolio feel). */
+.js-motion main article:has(> picture, > a > picture) {
+  transition:
+    transform 0.6s var(--ease-slow, cubic-bezier(0.22, 1, 0.36, 1)),
+    box-shadow 0.6s var(--ease-slow, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.js-motion main article:has(> picture, > a > picture):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -24px color-mix(in oklab, var(--color-ink) 35%, transparent);
+}
+.js-motion main article picture img {
+  transition: transform 1.2s var(--ease-slow, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.js-motion main article:hover picture img {
+  transform: scale(1.04);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                               */
+/* ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-block: 6rem; /* keeps focused and anchored content clear of the sticky header and the mobile bottom bar */
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-canvas font-sans text-body text-ink antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings:
+      'opsz' 144,
+      'SOFT' 30;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  *:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .prose-measure {
+    max-width: 68ch;
+  }
+  /* Long-form article body (journal MDX). Anything with `.not-prose` opts out. */
+  .article-prose {
+    @apply text-body-l text-ink;
+  }
+  .article-prose > :where(p, ul, ol, blockquote):not(.not-prose) {
+    @apply my-5;
+  }
+  .article-prose > :where(h2):not(.not-prose) {
+    @apply mt-12 mb-4 scroll-mt-28 font-display text-h2 text-ink;
+  }
+  .article-prose > :where(h3):not(.not-prose) {
+    @apply mt-9 mb-3 scroll-mt-28 font-display text-h3 text-ink;
+  }
+  .article-prose :where(a):not(.not-prose *) {
+    @apply text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent;
+  }
+  .article-prose :where(ul):not(.not-prose *) {
+    @apply list-disc pl-6;
+  }
+  .article-prose :where(ol):not(.not-prose *) {
+    @apply list-decimal pl-6;
+  }
+  .article-prose :where(li):not(.not-prose *) {
+    @apply my-1.5 pl-1;
+  }
+  .article-prose :where(li > p):not(.not-prose *) {
+    @apply my-1;
+  }
+  .article-prose :where(strong):not(.not-prose *) {
+    @apply font-semibold text-ink;
+  }
+  .article-prose :where(blockquote):not(.not-prose *) {
+    @apply border-l-4 border-sand pl-5 font-display text-h3 text-ink-muted italic;
+  }
+  .article-prose :where(hr):not(.not-prose *) {
+    @apply my-10 border-line;
+  }
+  .article-prose :where(code):not(.not-prose *) {
+    @apply rounded bg-surface-sunk px-1.5 py-0.5 font-mono text-[0.9em];
+  }
+  .article-prose :where(table):not(.not-prose *) {
+    @apply my-6 w-full text-body-s;
+  }
+  .article-prose :where(th, td):not(.not-prose *) {
+    @apply border-b border-line px-3 py-2 text-left align-top;
+  }
+  .article-prose :where(h2 + p, h3 + p):not(.not-prose *) {
+    @apply mt-0;
+  }
+  .overline {
+    @apply text-overline font-medium tracking-[0.14em] text-ink-muted uppercase;
+  }
+  .hairline {
+    border-color: var(--color-line);
+  }
+  .skeleton {
+    @apply animate-shimmer rounded-md bg-surface-sunk;
+    background-image: linear-gradient(
+      90deg,
+      var(--color-surface-sunk) 0%,
+      var(--color-surface) 50%,
+      var(--color-surface-sunk) 100%
+    );
+    background-size: 200% 100%;
+  }
+  .scrim-bottom {
+    background: linear-gradient(
+      to top,
+      rgba(22, 21, 15, 0.82) 0%,
+      rgba(22, 21, 15, 0.35) 45%,
+      transparent 100%
+    );
+  }
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    @apply sr-only;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Leaflet needs its own stylesheet; loaded lazily with the map. */

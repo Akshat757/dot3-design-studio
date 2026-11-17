@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* Brand palette from the client's portfolio deck (REQUIREMENTS.md §7). */
+:root {
+  --paper: #faf9f7;
+  --stone: #f5f3f1;
+  --mist: #efedeb;
+  --greige: #d8d5d0;
+  --ink: #1d1c1a;
+  --ink-soft: #5c5853;
+  /* TODO(client): confirm accent against the logo. */
+  --accent: #8b5e4a;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-stone: var(--stone);
+  --color-mist: var(--mist);
+  --color-greige: var(--greige);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-montserrat);
+  --font-display: var(--font-cormorant);
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-ink-soft text-xs font-medium tracking-[0.3em] uppercase;
+  }
+  .display {
+    @apply font-display font-light tracking-wide;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
