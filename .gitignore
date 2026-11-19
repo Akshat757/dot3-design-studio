@@ -43,3 +43,13 @@ next-env.d.ts
 # raw client source files (large, kept locally; optimised copies live in public/images)
 /assets/portfolio-pdf/
 /assets/client-originals/
+
+# local tooling / OS / editor
+/.claude/
+/.wrangler/
+.dev.vars
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.log

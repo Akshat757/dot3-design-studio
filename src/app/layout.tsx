@@ -3,6 +3,8 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { Cursor } from "@/components/motion/cursor";
 import { Intro, introScript } from "@/components/motion/intro";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { FooterScroll } from "@/components/footer/footer-scroll";
+import { FooterShowcase } from "@/components/footer/footer-showcase";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsAppButton } from "@/components/whatsapp-button";
@@ -47,7 +49,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll>
           <SiteHeader />
           <main className="flex-1">{children}</main>
-          <SiteFooter />
+          <div data-footer-1 className="footer-1">
+            <SiteFooter />
+          </div>
+          <FooterShowcase />
+          <FooterScroll />
         </SmoothScroll>
         <WhatsAppButton />
         <Cursor />

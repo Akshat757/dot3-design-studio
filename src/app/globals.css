@@ -156,3 +156,21 @@ body {
     animation: none;
   }
 }
+
+/* ---- Footer scroll snap: the page settles at Footer 1, a further gesture reveals Footer 2 (3D showcase). ----
+   `main` is one tall snap area, so scrolling inside it stays completely free; only the two footers are stops.
+   Mouse-wheel input is driven by Lenis instead (see components/footer/footer-scroll.tsx), so snapping is off then. */
+html:not([data-input="wheel"]) {
+  scroll-snap-type: y mandatory;
+}
+main {
+  scroll-snap-align: start;
+}
+.footer-1 {
+  scroll-snap-align: end;
+  scroll-snap-stop: always;
+}
+.footer-2 {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
