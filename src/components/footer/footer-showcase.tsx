@@ -90,6 +90,11 @@ export function FooterShowcase() {
         className="absolute inset-0 -z-10 block h-full w-full"
         data-failed={failed || undefined}
       />
+      {/* Soft scrim so the headline stays legible when a taller building passes behind it. */}
+      <div
+        aria-hidden
+        className="from-ink/80 pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b to-transparent"
+      />
       <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto flex max-w-7xl flex-col gap-3 px-4 pt-24 sm:px-8 sm:pt-28">
         <p className="eyebrow text-greige">Spaces we’ve shaped</p>
         <h2 className="display text-4xl sm:text-6xl">Built to be lived in</h2>

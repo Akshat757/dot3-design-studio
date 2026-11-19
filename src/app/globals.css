@@ -165,6 +165,7 @@ html:not([data-input="wheel"]) {
 }
 main {
   scroll-snap-align: start;
+  scroll-margin-top: 10rem; /* extend the area over the page top so the very top stays reachable */
 }
 .footer-1 {
   scroll-snap-align: end;

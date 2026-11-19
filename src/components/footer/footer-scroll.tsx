@@ -14,6 +14,11 @@ import { useEffect } from "react";
 const QUIET_MS = 140; // a pause this long between wheel events means a new gesture
 const EPS = 3;
 
+type Lenis = NonNullable<ReturnType<typeof useLenis>>;
+const setVirtualScroll = (l: Lenis, fn: Lenis["options"]["virtualScroll"]) => {
+  l.options.virtualScroll = fn;
+};
+
 export function FooterScroll() {
   const lenis = useLenis();
 
@@ -75,7 +80,7 @@ export function FooterScroll() {
     };
 
     const previous = lenis.options.virtualScroll;
-    lenis.options.virtualScroll = (data) => {
+    setVirtualScroll(lenis, (data) => {
       if (previous && previous(data) === false) return false;
       const { deltaY, event } = data;
       if (event.type !== "wheel" || event.ctrlKey || deltaY === 0) return true;
@@ -87,7 +92,7 @@ export function FooterScroll() {
       lastWheel = now;
       lastMag = mag;
 
-      const y = lenis.animatedScroll;
+      const y = window.scrollY; // the real position (Lenis' own value can lag behind native/snap scrolling)
       if (deltaY > 0) {
         if (y >= stop2 - EPS) return true; // already at the very end
         if (y >= stop1 - EPS) {
@@ -109,12 +114,12 @@ export function FooterScroll() {
       }
       if (settling && y >= stop1 - EPS) return false; // inertia after arriving back at Footer 1
       return true;
-    };
+    });
 
     return () => {
       ro.disconnect();
       window.clearTimeout(safety);
-      lenis.options.virtualScroll = previous;
+      setVirtualScroll(lenis, previous);
     };
   }, [lenis]);
 
